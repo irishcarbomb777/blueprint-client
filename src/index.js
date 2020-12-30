@@ -24,10 +24,15 @@ Amplify.configure({
   API: {
     endpoints: [
       { // Mockupgenerator DynamoDB api
-        name: "mockupgenerator",
-        endpoint: config.apiGateway.URL,
-        region: config.apiGateway.REGION
+        name: "blueprint-mockupgen-api",
+        endpoint: config.apiGatewayJS.URL,
+        region: config.apiGatewayJS.REGION
       },
+      {
+        name: "blueprint-python-api",
+        endpoint: config.apiGatewayPY.URL,
+        region: config.apiGatewayPY.REGION
+      }
       // NOTE: You'll need to add the python server API below this entry
     ]
   }

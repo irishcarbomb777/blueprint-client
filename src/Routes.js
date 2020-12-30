@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
 import Signup from "./containers/Signup"
-import NewScan from "./containers/NewScan";
+import NewMockup from "./containers/NewMockup";
 import NotFound from "./containers/NotFound";
 import Scans from "./containers/Scans";
 
@@ -17,7 +17,7 @@ export default function Routes() {
         <Login />
       </Route>
       <Route exact path="/scans/new">
-        <NewScan />
+        <NewMockup />
       </Route>
       <Route exact path="/scandata/:userId/:scanId">
         <Scans />

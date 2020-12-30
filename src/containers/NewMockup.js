@@ -6,21 +6,24 @@ import { onError } from "../libs/errorLib";
 import config from "../config";
 import { API } from "aws-amplify";
 import { s3Upload } from "../libs/awsLib";
-import "./NewScan.css";
+import "./NewMockup.css";
 
 
 export default function NewScan() {
   const file = useRef(null);
   const history = useHistory();
-  const [analysisType, setAnalysisType] = useState("");
+  const [packageType, setPackageType] = useState("");
+  const [projectName, setProjectName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
-    return analysisType.length > 0;
+    return true // (packageType.length > 0) && file.current && projectName;
   }
 
   function handleFileChange(event) {
     file.current = event.target.files[0];
+    console.log(file.current)
+    console.log(packageType)
   }
 
   async function handleSubmit(event) {
@@ -37,9 +40,9 @@ export default function NewScan() {
     setIsLoading(true);
 
     try {
-        const attachment = file.current ? await s3Upload(file.current) : null;
+        // const attachment = file.current ? await s3Upload(projectName, file.current) : null;
 
-        await createScandata({analysisType, attachment});
+        createMockup({packageType});
         history.push("/");
     } catch(e) {
         onError(e);
@@ -47,24 +50,41 @@ export default function NewScan() {
     }
   }
 
-  function createScandata(scandata) {
-      console.log(scandata);
-      return API.post("scandata", "/scandata", {
-          body: scandata
-      })
+  function createMockup(packageType) {
+      console.log(packageType);
+      API.get("blueprint-python-api", "/gen")
+         .then(response => {
+           console.log(response)
+         })
   }
   return (
-    <div className="NewNote">
+    <div className="NewMockup">
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="analysisType">
+        <Form.Group controlId="projectNameInput">
+          <Form.Label><b>Input Project Name</b></Form.Label>
           <Form.Control
-            value={analysisType}
-            as="textarea"
-            onChange={(e) => setAnalysisType(e.target.value)}
-          />
+            value={projectName}
+            as="input"
+            onChange= {(e) => setProjectName(e.target.value)}
+          >            
+          </Form.Control>
+        </Form.Group>
+        <Form.Group controlId="packageInput">
+          <Form.Label><b>Select Package</b></Form.Label>
+          <Form.Control
+            value={packageType}
+            as="select"
+            onChange={(e) => setPackageType(e.target.value)}
+          >
+            <option></option>
+            <option>Labor Package</option>
+            <option>Corporate Package</option>
+            <option>School Package</option>
+            <option>Brewery Package</option>
+          </Form.Control>
         </Form.Group>
         <Form.Group controlId="file">
-          <Form.Label>Attachment</Form.Label>
+          <Form.Label><b>Logo Upload</b></Form.Label>
           <Form.Control onChange={handleFileChange} type="file" />
         </Form.Group>
         <LoaderButton
@@ -75,7 +95,7 @@ export default function NewScan() {
           isLoading={isLoading}
           disabled={!validateForm()}
         >
-          Run Scan
+          Create Mockup Package
         </LoaderButton>
       </Form>
     </div>

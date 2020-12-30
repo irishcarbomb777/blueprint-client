@@ -4,10 +4,14 @@ const config = {
     REGION: "us-east-1",
     BUCKET: "blueprint-mockupgenerator-logo-upload",
   },
-  apiGateway: {
+  apiGatewayJS: {
     REGION: "us-east-1",
     URL: "https://er3n6mlsxd.execute-api.us-east-1.amazonaws.com/prod",
   }, 
+  apiGatewayPY: {
+    REGION: "us-east-1",
+    URL: "https://bll7tis7h1.execute-api.us-east-1.amazonaws.com/dev"
+  },
   cognito: {
     REGION: "us-east-1",
     USER_POOL_ID: "us-east-1_XNOWDtwOR",

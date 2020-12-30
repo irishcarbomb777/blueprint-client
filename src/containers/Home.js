@@ -43,7 +43,7 @@ export default function Home() {
         <LinkContainer to="/scans/new">
           <ListGroup.Item action className="py-3 text-nowrap text-truncate">
             <BsPencilSquare size={17} />
-            <span className="ml-2 font-weight-bold">Run a new scan</span>
+            <span className="ml-2 font-weight-bold">Create a New Mockup Package</span>
           </ListGroup.Item>
         </LinkContainer>
         {scandata.map(({ userId, scanId, analysisType, dataOutput }) => (
